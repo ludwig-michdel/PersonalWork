@@ -1,15 +1,14 @@
 pipeline {
   agent any
   stages {
-    stage('prepare') {
+    stage('Récupération des sources') {
       steps {
-        sleep(time: 10, unit: 'MINUTES')
+        git(url: 'https://github.com/ludwig-michdel/PersonalWork.git', branch: 'master', credentialsId: 'loginGitHubLMI')
       }
     }
-    stage('build') {
+    stage('') {
       steps {
-        echo 'coucou'
-        sh 'mvn'
+        mail(subject: '[AL 32 - JpetStore ] Build', body: 'Bonjour, un nouveau build s\'est correctement déroulé grâce à BlueOcean ! Vers l\'infini et Yallah !', from: '[admin jpetstore]', to: 'ludovic.michaudel@gmail.com', charset: 'UTF-8', cc: 'kvin.ly@gmail.com')
       }
     }
   }
