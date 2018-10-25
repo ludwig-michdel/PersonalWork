@@ -20,9 +20,9 @@ pipeline {
 				
 					nexusVersion:'nexus3',
 					protocol:'http',
-					nexusUrl:'localhost:8081/',
+					nexusUrl:'localhost:8081',
 					groupId:'jpetstore',
-					version:'1.0-SNAPSHOT',
+					version:'1.1-SNAPSHOT',
 					repository:'maven-snapshots',
 					credentialsId:'adminNexus'
 					
