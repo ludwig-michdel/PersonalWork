@@ -26,7 +26,7 @@ pipeline {
 						artifactId('jpetstore')
 						type('war')
 						classifier('debug')
-						file('target/jpetstore.war)
+						file('target/jpetstore.war')
 					}
 					
 				}
