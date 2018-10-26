@@ -14,13 +14,12 @@ pipeline {
     stage('qualimetrie') {
       steps {
         withSonarQubeEnv('sonar') {
-		
           bat(script: 'runsonar.bat', encoding: 'UTF-8', returnStatus: true)
-          
         }
 
       }
     }
+<<<<<<< HEAD
 	stage('quality gate') {
 		steps {
 		
@@ -31,12 +30,21 @@ pipeline {
 			}
 		}
 	}
+=======
+    stage('quality gate') {
+      steps {
+        timeout(time: 10, unit: 'MINUTES') {
+          waitForQualityGate(abortPipeline: true)
+        }
+>>>>>>> f615afbd1f81e366b62d8292c849a68833f68da9
 
+      }
+    }
     stage('publication') {
       steps {
         nexusArtifactUploader(artifacts: [
-                                                            					[artifactId: 'jpetstore', classifier: 'debug', file: 'target/jpetstore.war', type: 'war']
-                                                            				], nexusVersion: 'nexus3', protocol: 'http', nexusUrl: 'localhost:8081', groupId: 'jpetstore', version: '1.1-SNAPSHOT', repository: 'maven-snapshots', credentialsId: 'adminNexus')
+                                                                      					[artifactId: 'jpetstore', classifier: 'debug', file: 'target/jpetstore.war', type: 'war']
+                                                                      				], nexusVersion: 'nexus3', protocol: 'http', nexusUrl: 'localhost:8081', groupId: 'jpetstore', version: '1.1-SNAPSHOT', repository: 'maven-snapshots', credentialsId: 'adminNexus')
         }
       }
     }
