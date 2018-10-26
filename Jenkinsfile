@@ -28,8 +28,6 @@ pipeline {
 			}
 		}
 	}
-	  
-  }
 
     stage('publication') {
       steps {
