@@ -13,15 +13,14 @@ pipeline {
     }
     stage('qualimetrie') {
       steps {
-        bat(script: 'runsonar.bat', returnStatus: true)
-        waitForQualityGate(abortPipeline: true)
+        bat(script: 'runsonar.bat', returnStatus: true, encoding: 'UTF-8')
       }
     }
     stage('publication') {
       steps {
         nexusArtifactUploader(artifacts: [
-                    					[artifactId: 'jpetstore', classifier: 'debug', file: 'target/jpetstore.war', type: 'war']
-                    				], nexusVersion: 'nexus3', protocol: 'http', nexusUrl: 'localhost:8081', groupId: 'jpetstore', version: '1.1-SNAPSHOT', repository: 'maven-snapshots', credentialsId: 'adminNexus')
+                              					[artifactId: 'jpetstore', classifier: 'debug', file: 'target/jpetstore.war', type: 'war']
+                              				], nexusVersion: 'nexus3', protocol: 'http', nexusUrl: 'localhost:8081', groupId: 'jpetstore', version: '1.1-SNAPSHOT', repository: 'maven-snapshots', credentialsId: 'adminNexus')
         }
       }
     }
