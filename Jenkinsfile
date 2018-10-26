@@ -19,7 +19,7 @@ pipeline {
 
       }
     }
-<<<<<<< HEAD
+
 	stage('quality gate') {
 		steps {
 		
@@ -30,13 +30,6 @@ pipeline {
 			}
 		}
 	}
-=======
-    stage('quality gate') {
-      steps {
-        timeout(time: 10, unit: 'MINUTES') {
-          waitForQualityGate(abortPipeline: true)
-        }
->>>>>>> f615afbd1f81e366b62d8292c849a68833f68da9
 
       }
     }
