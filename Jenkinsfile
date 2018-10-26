@@ -11,6 +11,7 @@ pipeline {
         bat(script: 'runmaven.bat', encoding: 'UTF-8')
       }
     }
+	
     stage('qualimetrie') {
       parallel {
         stage('qualimetrie') {
@@ -21,19 +22,21 @@ pipeline {
 
           }
         }
-        stage('quality gate') {
-          steps {
-            withSonarQubeEnv('sonar') {
-              timeout(time: 10, unit: 'MINUTES') {
-                waitForQualityGate(abortPipeline: true)
-              }
 
-            }
-
-          }
-        }
       }
     }
+	
+	stage('quality gate') {
+	  steps {
+		withSonarQubeEnv('sonar') {
+		  timeout(time: 10, unit: 'MINUTES') {
+			waitForQualityGate(abortPipeline: true)
+		  }
+
+		}
+
+	  }
+	}
     stage('publication') {
       steps {
         nexusArtifactUploader(artifacts: [
