@@ -11,7 +11,6 @@ pipeline {
         bat(script: 'runmaven.bat', encoding: 'UTF-8')
       }
     }
-	
     stage('qualimetrie') {
       parallel {
         stage('qualimetrie') {
@@ -22,26 +21,33 @@ pipeline {
 
           }
         }
-
       }
     }
-	
-	stage('quality gate') {
-	  steps {
-		withSonarQubeEnv('sonar') {
-		  timeout(time: 10, unit: 'MINUTES') {
-			waitForQualityGate(abortPipeline: true)
-		  }
+    stage('quality gate') {
+      parallel {
+        stage('quality gate') {
+          steps {
+            withSonarQubeEnv('sonar') {
+              timeout(time: 10, unit: 'MINUTES') {
+                waitForQualityGate(abortPipeline: true)
+              }
 
-		}
+            }
 
-	  }
-	}
+          }
+        }
+        stage('sleep') {
+          steps {
+            sleep 10
+          }
+        }
+      }
+    }
     stage('publication') {
       steps {
         nexusArtifactUploader(artifacts: [
-                                                                                                                        					[artifactId: 'jpetstore', classifier: 'debug', file: 'target/jpetstore.war', type: 'war']
-                                                                                                                        				], nexusVersion: 'nexus3', protocol: 'http', nexusUrl: 'localhost:8081', groupId: 'jpetstore', version: '1.1-SNAPSHOT', repository: 'maven-snapshots', credentialsId: 'adminNexus')
+                                                                                                                                  					[artifactId: 'jpetstore', classifier: 'debug', file: 'target/jpetstore.war', type: 'war']
+                                                                                                                                  				], nexusVersion: 'nexus3', protocol: 'http', nexusUrl: 'localhost:8081', groupId: 'jpetstore', version: '1.1-SNAPSHOT', repository: 'maven-snapshots', credentialsId: 'adminNexus')
         }
       }
     }
