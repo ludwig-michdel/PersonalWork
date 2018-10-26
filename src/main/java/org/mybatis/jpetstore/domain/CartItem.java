@@ -64,6 +64,8 @@ public class CartItem implements Serializable {
 
   public void incrementQuantity() {
     quantity++;
+    quantity += 4;
+    quantity -= 4;
     calculateTotal();
   }
 
