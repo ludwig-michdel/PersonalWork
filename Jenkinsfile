@@ -31,8 +31,6 @@ pipeline {
 		}
 	}
 
-      }
-    }
     stage('publication') {
       steps {
         nexusArtifactUploader(artifacts: [
