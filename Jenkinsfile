@@ -12,7 +12,6 @@ pipeline {
       }
     }
     stage('qualimetrie') {
-      parallel {
         stage('qualimetrie') {
           steps {
             withSonarQubeEnv('sonar') {
@@ -21,10 +20,8 @@ pipeline {
 
           }
         }
-      }
     }
     stage('quality gate') {
-      parallel {
         stage('quality gate') {
           steps {
             sleep 10
@@ -37,7 +34,6 @@ pipeline {
 
           }
         }
-      }
     }
     stage('publication') {
       steps {
