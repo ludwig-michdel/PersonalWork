@@ -23,6 +23,13 @@ pipeline {
         }
       }
     }
+	
+	stage('sleep') {
+	  steps {
+		sleep 10
+	  }
+	}
+		
     stage('quality gate') {
       parallel {
         stage('quality gate') {
@@ -34,11 +41,6 @@ pipeline {
 
             }
 
-          }
-        }
-        stage('sleep') {
-          steps {
-            sleep 10
           }
         }
       }
