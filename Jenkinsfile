@@ -11,30 +11,27 @@ pipeline {
         bat(script: 'runmaven.bat', encoding: 'UTF-8')
       }
     }
-    stage('qualimetrie') {
-        stage('qualimetrie') {
-          steps {
-            withSonarQubeEnv('sonar') {
-              bat(script: 'runsonar.bat', encoding: 'UTF-8')
-            }
-
-          }
-        }
-    }
+	
+	stage('qualimetrie') {
+		steps {
+			withSonarQubeEnv('sonar') {
+				bat(script: 'runsonar.bat', encoding: 'UTF-8')
+			}
+		}
+	}
+	
     stage('quality gate') {
-        stage('quality gate') {
-          steps {
-            sleep 10
-            withSonarQubeEnv('sonar') {
-              timeout(time: 10, unit: 'MINUTES') {
-                waitForQualityGate(abortPipeline: true)
-              }
+	  steps {
+		sleep 10
+		withSonarQubeEnv('sonar') {
+		  timeout(time: 10, unit: 'MINUTES') {
+			waitForQualityGate(abortPipeline: true)
+		  }
 
-            }
-
-          }
-        }
+		}
+	  }
     }
+	
     stage('publication') {
       steps {
         nexusArtifactUploader(artifacts: [
