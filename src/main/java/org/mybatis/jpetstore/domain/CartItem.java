@@ -56,19 +56,19 @@ public class CartItem implements Serializable {
   public int getQuantity() {
     return quantity;
   }
-
+  @Deprecated
   public void setQuantity(int quantity) {
     this.quantity = quantity;
     calculateTotal();
   }
 
+  @Deprecated
   public void incrementQuantity() {
-    quantity++;
-    quantity =- 4;
-    quantity =+ 4;
+    quantity++;	
     calculateTotal();
   }
 
+  @Deprecated
   private void calculateTotal() {
     if (item != null && item.getListPrice() != null) {
       total = item.getListPrice().multiply(new BigDecimal(quantity));
