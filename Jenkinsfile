@@ -14,12 +14,23 @@ pipeline {
     stage('qualimetrie') {
       steps {
         withSonarQubeEnv('sonar') {
+		
           bat(script: 'runsonar.bat', encoding: 'UTF-8', returnStatus: true)
-          waitForQualityGate(abortPipeline: true)
+          
         }
 
       }
     }
+	stage('quality gate') {
+		steps {
+			timeout(time:10, unit: 'MINUTES') {
+				waitForQualityGate(abortPipeline: true)
+			}
+		}
+	}
+	  
+  }
+
     stage('publication') {
       steps {
         nexusArtifactUploader(artifacts: [
