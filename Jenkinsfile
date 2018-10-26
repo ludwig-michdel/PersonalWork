@@ -34,22 +34,11 @@ pipeline {
         }
       }
     }
-    stage('quality gate') {
-      steps {
-        withSonarQubeEnv('sonar') {
-          timeout(time: 10, unit: 'MINUTES') {
-            waitForQualityGate(abortPipeline: true)
-          }
-
-        }
-
-      }
-    }
     stage('publication') {
       steps {
         nexusArtifactUploader(artifacts: [
-                                                                                                              					[artifactId: 'jpetstore', classifier: 'debug', file: 'target/jpetstore.war', type: 'war']
-                                                                                                              				], nexusVersion: 'nexus3', protocol: 'http', nexusUrl: 'localhost:8081', groupId: 'jpetstore', version: '1.1-SNAPSHOT', repository: 'maven-snapshots', credentialsId: 'adminNexus')
+                                                                                                                        					[artifactId: 'jpetstore', classifier: 'debug', file: 'target/jpetstore.war', type: 'war']
+                                                                                                                        				], nexusVersion: 'nexus3', protocol: 'http', nexusUrl: 'localhost:8081', groupId: 'jpetstore', version: '1.1-SNAPSHOT', repository: 'maven-snapshots', credentialsId: 'adminNexus')
         }
       }
     }
